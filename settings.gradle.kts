@@ -1,3 +1,3 @@
 
-rootProject.name = "pomtools"
-
+rootProject.name = "pom-tool"
+include("model")
