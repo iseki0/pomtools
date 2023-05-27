@@ -1,5 +1,6 @@
 plugins{
     `maven-publish`
+    signing
 }
 
 tasks.withType<AbstractArchiveTask>().configureEach {
@@ -36,6 +37,7 @@ publishing {
     publications {
         withType<MavenPublication>{
             pom {
+                name.set("POM tools::$artifactId")
                 description.set("POM tools")
                 url.set("https://github.com/iseki0/pomtools")
                 licenses {
@@ -60,4 +62,11 @@ publishing {
         }
     }
 
+}
+
+signing {
+    // To use local gpg command, configure gpg options in ~/.gradle/gradle.properties
+    // reference: https://docs.gradle.org/current/userguide/signing_plugin.html#example_configure_the_gnupgsignatory
+    useGpgCmd()
+    publishing.publications.forEach { sign(it) }
 }
