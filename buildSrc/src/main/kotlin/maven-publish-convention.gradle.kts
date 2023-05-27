@@ -40,7 +40,7 @@ publishing {
             val publication = this
             val javadocJar = tasks.register("${publication.name}JavadocJar", Jar::class) {
                 archiveClassifier.set("javadoc")
-                from(tasks.dokkaHtml)
+                from(tasks.dokkaJavadoc)
                 // Each archive name should be distinct. Mirror the format for the sources Jar tasks.
                 archiveBaseName.set("${archiveBaseName.get()}-${publication.name}")
             }
