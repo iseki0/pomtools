@@ -1,7 +1,6 @@
 plugins {
     `kotlin-convention`
     `dokka-convention`
-//    `jacoco-convention`
     `maven-publish-convention`
 }
 

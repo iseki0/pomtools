@@ -1,6 +1,7 @@
-plugins{
-    `maven-publish`
+plugins {
+    id("org.jetbrains.dokka")
     signing
+    `maven-publish`
 }
 
 tasks.withType<AbstractArchiveTask>().configureEach {
@@ -35,7 +36,16 @@ publishing {
     }
 
     publications {
-        withType<MavenPublication>{
+        withType<MavenPublication> {
+            val publication = this
+            val javadocJar = tasks.register("${publication.name}JavadocJar", Jar::class) {
+                archiveClassifier.set("javadoc")
+                from(tasks.dokkaHtml)
+                // Each archive name should be distinct. Mirror the format for the sources Jar tasks.
+                archiveBaseName.set("${archiveBaseName.get()}-${publication.name}")
+            }
+
+            artifact(javadocJar)
             pom {
                 name.set("POM tools::$artifactId")
                 description.set("POM tools")
